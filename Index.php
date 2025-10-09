@@ -1,3 +1,19 @@
+<?php
+include 'db.php';
+
+$result_instructors = mysqli_query(mysql: $conn, query: "SELECT COUNT(*) AS total FROM instructors");
+$row_instructors = mysqli_fetch_assoc(result: $result_instructors);
+$totalInstructors = $row_instructors['total'];
+
+$result_subjects = mysqli_query(mysql: $conn, query: "SELECT COUNT(*) AS total FROM instructors");
+$row_subjects = mysqli_fetch_assoc(result: $result_instructors);
+$totalSubjects = $row_instructors['total'];
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -292,7 +308,7 @@
               <i class="bi bi-person-badge metric-icon"></i>
               <div>
                 <div class="card-title">Total Instructors</div>
-                <div class="card-value">12</div>
+                <div class="card-value"><?php echo $totalInstructors; ?></div>
               </div>
             </div>
           </a>
@@ -305,7 +321,7 @@
               <i class="bi bi-journal-text metric-icon"></i>
               <div>
                 <div class="card-title">Total Subjects</div>
-                <div class="card-value">18</div>
+               <div class="card-value"><?php echo $totalSubjects; ?></div>
               </div>
             </div>
           </a>

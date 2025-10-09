@@ -1,0 +1,157 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 07, 2025 at 04:32 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ckc_dashboard`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subjects`
+--
+
+CREATE TABLE `subjects` (
+  `id` int(11) NOT NULL,
+  `code` varchar(10) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `units` int(11) NOT NULL,
+  `instructor_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`id`, `code`, `title`, `units`, `instructor_id`, `created_at`) VALUES
+(1, 'CS101', 'Introduction to Computer Science', 3, 1, '2025-10-07 02:22:32');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `code` (`code`),
+  ADD KEY `instructor_id` (`instructor_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD CONSTRAINT `subjects_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `instructors` (`id`) ON DELETE SET NULL;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+para nia mag real time	
+
+
+
+
+<?php
+include 'db_connection.php';
+
+$result_instructors = mysqli_query($conn, "SELECT COUNT(*) AS total FROM instructors");
+$row_instructors = mysqli_fetch_assoc($result_instructors);
+$totalInstructors = $row_instructors['total'];
+
+$result_subjects = mysqli_query($conn, "SELECT COUNT(*) AS total FROM subjects");
+$row_subjects = mysqli_fetch_assoc($result_subjects);
+$totalSubjects = $row_subjects['total'];
+?>
+
+<div class="card-value"><?php echo $totalInstructors; ?></div>
+
+
+div class="card-value"><?php echo $totalSubjects; ?></div>
+
+
+
+buhat ug new files 
+
+get_counts.php
+<?php
+// get_counts.php
+
+// Include DB connection
+include 'db_connection.php'; // ✅ Make sure this path is correct
+
+// Get instructors count
+$instructorQuery = "SELECT COUNT(*) AS total FROM instructors";
+$instructorResult = mysqli_query($conn, $instructorQuery);
+$instructorCount = mysqli_fetch_assoc($instructorResult)['total'] ?? 0;
+
+// Get subjects count
+$subjectQuery = "SELECT COUNT(*) AS total FROM subjects";
+$subjectResult = mysqli_query($conn, $subjectQuery);
+$subjectCount = mysqli_fetch_assoc($subjectResult)['total'] ?? 0;
+
+// Return as JSON
+echo json_encode([
+  'instructors' => $instructorCount,
+  'subjects' => $subjectCount
+]);
+?>
+
+
+
+para connect
+db_connection.php    
+<?php
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "ckc_dashboard"; 
+
+$conn = mysqli_connect($host, $user, $pass, $db);
+
+if (!$conn) {
+  die("Database connection failed: " . mysqli_connect_error());
+}
+?>
+
+
+
+
+
+
+
